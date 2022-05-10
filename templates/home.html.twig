@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+
+<!-- Mirrored from themes.webmasterdriver.net/Elemo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Feb 2021 20:22:00 GMT -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title> A&M Home</title>
+    <!--Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <!--Custome Style -->
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <!--OWL Carousel slider-->
+    <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+    <!--FontAwesome Font Style -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+    <!-- Google-Font-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Header -->
+<header id="header" class="transparent-header">
+    <nav class="navbar navbar-expand-lg fixed-top" id="header_nav">
+        <div class="container-fluid">
+            <div class="row header_row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="navbar-header">
+                        <div class="logo"> <a href="#"><img style="width: 70px" src="{{ asset('assets/images/A&M.png')}}" alt="image"/></a> </div>
+                    </div>
+                    <button id="menu_slide" data-target="#navigation" aria-expanded="false" data-toggle="collapse" class="navbar-toggler" type="button">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+
+
+                <div class="col-md-9 col-sm-12 col-xs-12">
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="menu-item"><a href="{{ path('') }}">Home</a> <span class="arrow"></span>
+                            </li>
+                            <li class="menu-item"><a href="{{ path('blog') }}">Blog</a> <span class="arrow"></span>
+
+                            </li>
+                            <li class="menu-item"><a href="{{ path('event_index') }}">Event</a> <span class="arrow"></span>
+                            </li>
+                            <li class="menu-item"><a href="{{ path('gmusee_index') }}">Museum</a> <span class="arrow"></span>
+
+                            </li>
+                            <li class="menu-item"><a href="{{ path('showproduit') }}">Shop</a> <span class="arrow"></span>
+
+                            </li>
+                            <li class="menu-item"><a href="{{ path('categorie_index') }}">Forum</a> <span class="arrow"></span>
+
+                            </li>
+                            <li class="menu-item"><a href="{{ path('profile') }}">My profile</a> <span class="arrow"></span>
+
+                            </li>
+                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            {#                            {%  if  not app.user %}#}
+                            <li class=""><a href="{{ path('affiche') }}">User Panel </a> <span class="arrow"></span>
+                                {% endif %}
+                            </li>
+                            {% if not app.user %}
+                                <li><a href="{{ path('app_login') }}">Sign In</a></li>
+                            {% endif %}
+                            {% if app.user %}
+                                <li><a href="{{ path('app_logout')}}">Sign Out</a></li>
+                                {% if  app.user.code==1 %}
+                                    <div class="submit_listing">
+                                        <i class="fa  fa-plus-circle">Votre compte est activer</i>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- /Header -->
+
+<!-- Banner -->
+<section id="banner" class="intro-bg parallex-bg section-padding">
+    <div class="container">
+
+        <div class="categories-list div_zindex">
+            <div class="all-categories-header">
+                <div class="listing_header">
+                    <h5>Nos Exposee</h5>
+                    <div class="layout-switcher">
+                        <button><a  href="{{ path('trieex') }}">Sort</a></button>
+                    </div>
+                </div>
+                <div class="row"  id="entitiesNavv">
+                    {% for c in exposee %}
+                        <div class="col-md-4 grid_view show_listing">
+                            <div  class="listing_wrap" >
+
+                                <a   href="{{ path('afficheEX',{'id':c.id }) }}">
+                                    <div class="listing_img" >
+                                        {% for image in c.photo %}
+                                            <img src="{{ asset('images/products/'~image.name) }} " style="width: 50px;">
+                                        {% endfor %}
+
+                                        <div class="listing_info">
+                                            <h1>{{ c.nom }} </h1>
+                                            <h4>{{ c.description }} </h4>
+                                            <p>{{ c.dateC|date('m/d/Y') }} </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+
+
+                </div>
+                <div class="our_prtners text-center">
+                    {{ knp_pagination_render(exposee) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="dark-overlay"></div>
+</section>
+<!-- /Banner -->
+
+<!-- About-us -->
+
+<!-- /About-us -->
+
+
+<!-- Footer -->
+<footer id="footer" class="footer_2 secondary-bg">
+
+    <div class="footer_bottom">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <p>Copyright &copy; A&m</p>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="follow_us">
+                        <ul>
+                            <li><a href="https://www.facebook.com/ArtMuseum-111851127671094"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /Footer -->
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/interface.js"></script>
+<!--Carousel-JS-->
+<script src="assets/js/owl.carousel.min.js"></script>
+<!--Switcher-->
+<script src="assets/switcher/js/switcher.js"></script>
+</body>
+
+<!-- Mirrored from themes.webmasterdriver.net/Elemo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Feb 2021 20:22:00 GMT -->
+</html>
